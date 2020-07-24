@@ -35,13 +35,11 @@
             <div class="card card-1">
                 <div class="card-heading"></div>
                 <div class="card-body">
-                    <h2 class="title">Registration Info</h2>
+                    <h2 class="title">Registration Info</h2><br />
                     @if (ViewBag.Msg != null)
                     {
-                        <div class="row row-space">
                             @ViewBag.Msg
-                        </div>
-                    }
+                    }<br />
                     <form action="@Url.Action("Login","Home")" method="POST">
                         @Html.AntiForgeryToken()
                         <div class="input-group">
