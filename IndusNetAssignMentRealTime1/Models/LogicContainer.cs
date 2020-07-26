@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace IndusNetAssignMentRealTime1.Models
@@ -25,6 +26,11 @@ namespace IndusNetAssignMentRealTime1.Models
                 return false;
         }
 
+        public bool IsValidEmail(string email)
+        {
+            return Regex.IsMatch(email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+        }
+
         public UserModel Register(string userFirstName, string userLastName, DateTime userDob, string userGender, string userEmail, string userPassword)
         {
             db = new DatabaseContext();
@@ -34,7 +40,7 @@ namespace IndusNetAssignMentRealTime1.Models
             } 
             else
             {
-                if (!IsAdminPresent() && (userFirstName.Equals("Admin", StringComparison.OrdinalIgnoreCase) || userEmail.Equals("Admin@site.com", StringComparison.OrdinalIgnoreCase)))
+                if (!IsAdminPresent() && IsValidEmail(userEmail) && (userFirstName.Equals("Admin", StringComparison.OrdinalIgnoreCase) || userEmail.Equals("Admin@site.com", StringComparison.OrdinalIgnoreCase)))
                 {
                     try
                     {
